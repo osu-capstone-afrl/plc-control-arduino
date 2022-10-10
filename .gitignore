@@ -1,0 +1,3 @@
+# Arduino Sketchbook
+plc_sketchbook/libraries/*
+!plc_sketchbook/libraries/P1AM
