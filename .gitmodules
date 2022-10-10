@@ -1,0 +1,3 @@
+[submodule "plc_sketchbook/libraries/P1AM"]
+	path = plc_sketchbook/libraries/P1AM
+	url = https://github.com/facts-engineering/P1AM.git
