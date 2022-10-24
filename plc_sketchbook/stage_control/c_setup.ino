@@ -15,8 +15,9 @@ void setup() {
   }
 
   //Initialize Ethernet
+  Serial.println("Setup Configuration: Network enabled. Will now attempt to connect to network");
   Ethernet.begin(mac);
-  //setup_network();
+  setup_ethernet();
 
   // Initialize Stage and Sensor
   set_stage_power(true);

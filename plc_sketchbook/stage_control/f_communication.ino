@@ -12,6 +12,9 @@ void setup_ethernet() {
   // Report Info
   Serial.println("");
   Serial.println("Ethernet Connected");
+  Serial.print("DNS:              ");     Serial.println(Ethernet.dnsServerIP());
+  Serial.print("IPv4 addrss:      ");     Serial.println(Ethernet.localIP());
+  Serial.println("");
 }
 
 void report_serial() {
