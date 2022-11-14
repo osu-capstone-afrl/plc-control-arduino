@@ -2,20 +2,6 @@
 // Function Implementations: Communication Interfaces
 // ---------------------------------------------------
 
-void setup_ethernet() {
-  // Wait for Ethernet Shield to finish initializing
-  while (Ethernet.linkStatus() != LinkON) {
-    Serial.println("Ethernet Disconnected. Retrying..");
-    delay(500);
-  }
-
-  // Report Info
-  Serial.println("");
-  Serial.println("Ethernet Connected");
-  Serial.print("DNS:              ");     Serial.println(Ethernet.dnsServerIP());
-  Serial.print("IPv4 addrss:      ");     Serial.println(Ethernet.localIP());
-  Serial.println("");
-}
 
 void report_serial() {
   Serial.print("HOUSTON - DO YOU COPY?");
@@ -30,7 +16,7 @@ void clearSerialBuffer() {
 
 
 //Module Status Check Functions
-String status_check(uint8_t Slot) {                                     //Do I need to worry about int vs uint? ASK ADAM
+String status_check(uint8_t Slot) {                                       //Do I need to worry about int vs uint? ASK ADAM
   String message = "";
   if (Slot == 1) {                                                        // For P1-04DAL-2 module in slot 1
     //char P1.readStatus(3, Slot);                                        // Note that I don't think the other module (P1-15CDD1 module in slot 2) has diagnostics
@@ -106,4 +92,22 @@ uint32_t digital_in(uint8_t slot, uint8_t channel) {                    //Intend
 //void pro_analog_write(int pin_number, int value) { //Note "value" has range of 0->255, and will PWM to a specific value, not hold constant voltage
 //  pinMode(pin_number, OUTPUT);
 //  analogWrite(pin_number, value);
+//}
+
+
+
+///// The following code would be used if ethernet module is required
+//void setup_ethernet() {
+//  // Wait for Ethernet Shield to finish initializing
+//  while (Ethernet.linkStatus() != LinkON) {
+//    Serial.println("Ethernet Disconnected. Retrying..");
+//    delay(500);
+//  }
+//
+//  // Report Info
+//  Serial.println("");
+//  Serial.println("Ethernet Connected");
+//  Serial.print("DNS:              ");     Serial.println(Ethernet.dnsServerIP());
+//  Serial.print("IPv4 addrss:      ");     Serial.println(Ethernet.localIP());
+//  Serial.println("");
 //}

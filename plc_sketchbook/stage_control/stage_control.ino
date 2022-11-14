@@ -14,10 +14,10 @@
 
 // Communication Interfaces
 #include <SPI.h>
-#include <Ethernet.h>
+// #include <Ethernet.h>
 
 // Use the TCP version of rosserial_arduino
-#define ROSSERIAL_ARDUINO_TCP
+// #define ROSSERIAL_ARDUINO_TCP
 
 // Placeholder Required for Arduino's PreProcessor/Compiler
 void placeholder() {}

@@ -7,10 +7,12 @@ void loop()
 {
   // Read Sensors
   uint32_t current_distance = read_distance();
+
+  // Update Data
+  update_path_history(current_distance);
   
   // Control Brains
-  update_path_history(current_distance);
-  uint32_t requested_control = calculate_path();
+  uint32_t requested_control = calculate_path();  //In future put this directly inside motion control input
 
   // Serial Interface
   report_serial();
