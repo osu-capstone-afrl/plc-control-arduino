@@ -1,0 +1,153 @@
+function [x_rec_L,v_rec_L,a_rec_L,t_rec_L,x_rec_S,v_rec_S,a_rec_S,t_rec_S] = SPlanner(PLC_dt,max_v,max_a,time_to_max_a,x0,xf)
+%S-CURVE PLANNER
+%   Returns both the short (PLC-Usable) data and a higher resolution plot for
+%   visualization
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Perform Initial Calculations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+j = max_a / time_to_max_a;
+xf = xf - x0;
+
+% Unused Short Profile Calculations
+% short_profile = max_v * (time_to_max_a + max_v / max_a) > xf
+% if short_profile
+%     profile_max_v = max_a * (sqrt(xf / max_a - 0.75 * time_to_max_a^2) - 0.5 * time_to_max_a);
+% else
+%     profile_max_v = max_v;
+% end
+
+profile_max_v = max_v;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Find times at critical points
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+t2 = profile_max_v / max_a;
+t3 = t2 + time_to_max_a;
+
+% Unused Code
+% if short_profile
+%     t4 = t3
+% else
+%     t4 = xf / profile_max_v
+% end
+t4 = abs(xf) / profile_max_v;
+
+t5 = t4 + time_to_max_a;
+t6 = t4 + t2;
+t7 = t6 + time_to_max_a;
+time_total = t7;
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Calculate Long Profile
+%%%%%%%%%%%%%%%%%%%%%%%%
+dt = PLC_dt / 100; %So we can plot a much more specific curve to see whatprofile actually looks like
+t_rec_L = zeros(1,time_total/dt);
+% x_rec = zeros(1,time_total/dt);
+% v_rec = zeros(1,time_total/dt);
+% a_rec = zeros(1,time_total/dt);
+
+x_rec_L(1) = x0;
+t = 1;
+while t_rec_L(t) < time_total
+    t = t + 1;
+    t_rec_L(t) = (t-1)*dt;
+    if t_rec_L(t) < time_to_max_a 
+        % Ramp up acceleration
+        a_rec_L(t) = (j * t_rec_L(t));
+        v_rec_L(t) = (0.5 * j * t_rec_L(t)^2);
+    elseif t_rec_L(t) < t2
+        % Increase speed at max acceleration
+        a_rec_L(t) = (max_a);
+        v_rec_L(t) = (max_a * (t_rec_L(t) - 0.5 * time_to_max_a));
+    elseif t_rec_L(t) < t3
+        % Ramp down acceleration
+        a_rec_L(t) = (max_a - j * (t_rec_L(t) - t2));
+        v_rec_L(t) = (max_a * (t_rec_L(t) - 0.5 * time_to_max_a ) - 0.5 * j * (t_rec_L(t) - t2) ^ 2);
+    elseif t_rec_L(t) < t4
+        % Maintain max velocity
+        a_rec_L(t) = 0;
+        v_rec_L(t) = profile_max_v;
+    elseif t_rec_L(t) < t5
+        % Ramp down acceleration
+        a_rec_L(t) = (-j * (t_rec_L(t) - t4));
+        v_rec_L(t) = ( profile_max_v - 0.5 * j * (t_rec_L(t) - t4) ^ 2);
+    elseif t_rec_L(t) < t6
+        % Decrease speed at max acceleration
+        a_rec_L(t) = (-max_a);
+        v_rec_L(t) = (max_a * (t2 + t5 - t_rec_L(t) - 0.5 * time_to_max_a));
+    elseif t_rec_L(t) < t7
+        % Ramp up acceleration
+        a_rec_L(t) = (-max_a + j * (t_rec_L(t) - t6));
+        v_rec_L(t) = (max_a * (t2 + t5 - t_rec_L(t) - 0.5 * time_to_max_a) + 0.5 * j * (t_rec_L(t) - t6) ^ 2);
+    else
+        a_rec_L(t) = (0.0);
+        v_rec_L(t) = (0.0);
+    end
+
+    a_rec_L(t) = a_rec_L(t) * sign(xf);
+    v_rec_L(t) = v_rec_L(t) * sign(xf);
+    x_rec_L(t) = (x_rec_L(t-1) + v_rec_L(t-1) * dt);    
+end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Calculate Short Profile
+%%%%%%%%%%%%%%%%%%%%%%%%%
+dt = PLC_dt; %So we can plot a much more specific curve to see whatprofile actually looks like
+t_rec_S = zeros(1,time_total/dt);
+% x_rec = zeros(1,time_total/dt);
+% v_rec = zeros(1,time_total/dt);
+% a_rec = zeros(1,time_total/dt);
+
+x_rec_S(1) = x0;
+t = 1;
+while t_rec_S(t) < time_total
+    t = t + 1;
+    t_rec_S(t) = (t-1)*dt;
+    if t_rec_S(t) < time_to_max_a 
+        % Ramp up acceleration
+        a_rec_S(t) = (j * t_rec_S(t));
+        v_rec_S(t) = (0.5 * j * t_rec_S(t)^2);
+    elseif t_rec_S(t) < t2
+        % Increase speed at max acceleration
+        a_rec_S(t) = (max_a);
+        v_rec_S(t) = (max_a * (t_rec_S(t) - 0.5 * time_to_max_a));
+    elseif t_rec_S(t) < t3
+        % Ramp down acceleration
+        a_rec_S(t) = (max_a - j * (t_rec_S(t) - t2));
+        v_rec_S(t) = (max_a * (t_rec_S(t) - 0.5 * time_to_max_a ) - 0.5 * j * (t_rec_S(t) - t2) ^ 2);
+    elseif t_rec_S(t) < t4
+        % Maintain max velocity
+        a_rec_S(t) = 0;
+        v_rec_S(t) = profile_max_v;
+    elseif t_rec_S(t) < t5
+        % Ramp down acceleration
+        a_rec_S(t) = (-j * (t_rec_S(t) - t4));
+        v_rec_S(t) = ( profile_max_v - 0.5 * j * (t_rec_S(t) - t4) ^ 2);
+    elseif t_rec_S(t) < t6
+        % Decrease speed at max acceleration
+        a_rec_S(t) = (-max_a);
+        v_rec_S(t) = (max_a * (t2 + t5 - t_rec_S(t) - 0.5 * time_to_max_a));
+    elseif t_rec_S(t) < t7
+        % Ramp up acceleration
+        a_rec_S(t) = (-max_a + j * (t_rec_S(t) - t6));
+        v_rec_S(t) = (max_a * (t2 + t5 - t_rec_S(t) - 0.5 * time_to_max_a) + 0.5 * j * (t_rec_S(t) - t6) ^ 2);
+    else
+        a_rec_S(t) = (0.0);
+        v_rec_S(t) = (0.0);
+    end
+
+    a_rec_S(t) = a_rec_S(t) * sign(xf);
+    v_rec_S(t) = v_rec_S(t) * sign(xf);
+    x_rec_S(t) = (x_rec_S(t-1) + v_rec_S(t-1) * dt);    
+end
+
+
+
+
+
+
+end
