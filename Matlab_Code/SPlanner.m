@@ -1,4 +1,4 @@
-function [x_rec_L,v_rec_L,a_rec_L,t_rec_L,x_rec_S,v_rec_S,a_rec_S,t_rec_S] = SPlanner(PLC_dt,max_v,max_a,time_to_max_a,x0,xf)
+function [x_rec_L,v_rec_L,a_rec_L,t_rec_L,x_rec_S,v_rec_S,a_rec_S,t_rec_S,timestamps] = SPlanner(PLC_dt,max_v,max_a,time_to_max_a,x0,xf)
 %S-CURVE PLANNER
 %   Returns both the short (PLC-Usable) data and a higher resolution plot for
 %   visualization
@@ -39,6 +39,7 @@ t5 = t4 + time_to_max_a;
 t6 = t4 + t2;
 t7 = t6 + time_to_max_a;
 time_total = t7;
+timestamps = [time_to_max_a,t2,t3,t4,t5,t6,t7];
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate Long Profile

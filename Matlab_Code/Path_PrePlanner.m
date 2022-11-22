@@ -17,14 +17,14 @@ clc
 % Input Parameters
 %%%%%%%%%%%%%%%%%%
 
-max_v = 4;              % m/s
-max_a = .05;              % m/s
-time_to_max_a = 40;      % s
+max_v = 1;              % m/s
+max_a = .05;              % m/s^2
+time_to_max_a = 15;      % s
 PLC_dt = 5;          % s
-goal = -500;               % m
+goal = 0;               % m
 deadband_distance = 500; % m, and this is for a single direction. Deadband is actually twice as wide
 
-[x_rec_L,v_rec_L,a_rec_L,t_rec_L,x_rec_S,v_rec_S,a_rec_S,t_rec_S] = SPlanner(PLC_dt,max_v,max_a,time_to_max_a,deadband_distance,goal);
+[x_rec_L,v_rec_L,a_rec_L,t_rec_L,x_rec_S,v_rec_S,a_rec_S,t_rec_S,timestamps] = SPlanner(PLC_dt,max_v,max_a,time_to_max_a,deadband_distance,goal);
 
 
 % Plot
@@ -33,15 +33,17 @@ subplot(311)
 plot(t_rec_L,x_rec_L,'LineWidth',2)
 ylabel("Distance [m]")
 xlabel("Time [s]")
+xline(timestamps)
 subplot(312)
 plot(t_rec_L,v_rec_L,'LineWidth',2)
 xlabel("Time [s]")
 ylabel("Velocity [m/s]")
+xline(timestamps)
 subplot(313)
 plot(t_rec_L,a_rec_L,'LineWidth',2)
 ylabel("Acceleration [m/s^2]")
 xlabel("Time [s]")
-
+xline(timestamps)
 
 
 
