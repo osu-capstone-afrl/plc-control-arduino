@@ -2,7 +2,7 @@
 // Calculate Path
 // ---------------
 
-uint32_t calculate_path()  {
+int calculate_path()  {
 
   // Get ready to retreive stored data
   int lastPoint = last_pointer(histPointer);
@@ -43,7 +43,7 @@ uint32_t calculate_path()  {
   // PID & Feed-Forward Tuning
 
   // Issue Command
-  uint32_t requested_control = command_hist[histPointer] + (distance_hist[histPointer]-desired_offset);
+  int requested_control = command_hist[histPointer] + (distance_hist[histPointer]-desired_offset);
   command_hist[histPointer] = requested_control;
   return requested_control; //UPGRADE CODE HERE
 

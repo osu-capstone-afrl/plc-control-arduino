@@ -47,7 +47,7 @@ String status_check(uint8_t Slot) {                                       //Do I
 ///////////
 
 // OUTPUT FUNCTIONS
-void analog_out(uint32_t data, uint8_t slot, uint8_t channel) {         //Intended for P1-04DAL-2 module in slot 1
+void analog_out(int data, uint8_t slot, uint8_t channel) {         //Intended for P1-04DAL-2 module in slot 1
   P1.writeAnalog(data, slot, channel);                                      //data output range is 0->4095
 }                                                                           //channels are [1-4]
 
@@ -56,7 +56,7 @@ void digital_out(bool data, uint8_t slot, uint8_t channel) {            //Intend
 }                                                                           //channels are [1-7] (writing to 8 will have no effect)
 
 // INPUT FUNCTIONS
-uint32_t digital_in(uint8_t slot, uint8_t channel) {                    //Intended for P1-15CDD1 module in slot 2
+int digital_in(uint8_t slot, uint8_t channel) {                    //Intended for P1-15CDD1 module in slot 2
   return P1.readDiscrete(slot, channel);                                    //channels are [1-8]
 }                                                                           //specify channel 0 to read all values as hex [ex. 0x7f]
 
