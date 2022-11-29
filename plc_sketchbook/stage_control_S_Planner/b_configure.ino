@@ -29,7 +29,7 @@ int acceleration_hist[10];
 
 // Path Planning Constants
 int max_v = 1;                // m/s
-int max_a = .05;              // m/s^2
+int max_a = 1;              // m/s^2
 int time_to_max_a = 15;       // s
 int PLC_dt = 5;               // s
 int xf = 0;                  // m

@@ -47,14 +47,12 @@ xf = xf - x0;
 // end
 
 int profile_max_v = max_v;
-
 //////////////////////////////////////////////////////////////
 // Find times at critical points
 //////////////////////////////////////////////////////////////
 
 int t2 = profile_max_v / max_a;
 int t3 = t2 + time_to_max_a;
-
 // Unused Code
 // if short_profile
 //     t4 = t3
@@ -62,7 +60,6 @@ int t3 = t2 + time_to_max_a;
 //     t4 = xf / profile_max_v
 // end
 int t4 = abs(xf) / profile_max_v;
-
 int t5 = t4 + time_to_max_a;
 int t6 = t4 + t2;
 int t7 = t6 + time_to_max_a;
@@ -84,10 +81,10 @@ int t_rec_S[time_total/dt];
 int x_rec_S[time_total/dt];
 int v_rec_S[time_total/dt];
 int a_rec_S[time_total/dt];
+
+
 x_rec_S[0] = x0;
 int t = 0;
-Serial.println(time_total);
-Serial.println(time_total/dt);
 
 while (t < time_total) {
     t = t + 1;
