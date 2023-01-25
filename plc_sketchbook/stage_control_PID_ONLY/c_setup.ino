@@ -23,6 +23,9 @@ void setup() {
   set_stage_power(true);
   set_distance_sensor_power(true);
 
+  // Initialize Modules
+  // while(0==P1.configureModule(P1_08ADL_1_CONFIG[], uint8_t 2)); // Slot 2
+
   // Exteneral Remote Control Indicator
   pinMode(LED_BUILTIN, OUTPUT);
 

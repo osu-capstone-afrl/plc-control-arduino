@@ -5,7 +5,7 @@
 uint32_t calculate_path()  {
 
   // Data Pre-Processing //
-  //Check for Danger
+  // Check for Danger
 
   // Calculate Error
   // Always wants to go to desired_offset for PID only, so that distance is error

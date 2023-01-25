@@ -6,7 +6,7 @@
 void loop()
 {
   // Read Sensors
-  uint32_t current_distance = read_distance();
+  float current_distance = read_distance();
 
   // Update Data
   update_path_history(current_distance);

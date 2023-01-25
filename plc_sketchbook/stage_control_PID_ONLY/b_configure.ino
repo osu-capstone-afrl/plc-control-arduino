@@ -10,6 +10,10 @@ int histPointer = 1; //Index of historical Array
 int last_pointer = 0; //Index of historical Array
 const int histSize = 10; //Length of historical Array
 
+
+const float calibration_mm_per_increment = 0.00021364912;  
+const float calibration_mm_to_subtract = 0.35;  // A result of the input scale being from 0-20mA but the input data being from 4-20mA
+
 // Calibration Data - Linear Stage
 // Constants go here
 
@@ -22,15 +26,18 @@ unsigned long time_now = millis();
 uint32_t dt = 0;                              //Time between previous cycles
 
 // Global constants for use in code
-uint32_t desired_offset = 12345;              // FIX THIS /////// 100 microns with 50 micron tolerance, 2 deg sway allowance from perpendicular
+float desired_offset = 0.7;      //in mm        // MAYBE FIX THIS? /////// 100 microns with 50 micron tolerance, 2 deg sway allowance from perpendicular
 uint32_t command_hist[histSize]; //Try histSize
-uint32_t distance_hist[histSize];
-uint32_t velocity_hist[histSize];
-uint32_t acceleration_hist[histSize];
-uint32_t error[histSize];
+float distance_hist[histSize];
+float velocity_hist[histSize];
+float acceleration_hist[histSize];
+float error[histSize];
 
 // PID Tuning Parameters
-uint32_t Int_error = 0;
-uint32_t P = 1;
-uint32_t I = 0;
-uint32_t D = 0;
+float Int_error = 0;
+float P = 1;
+float I = 0;
+float D = 0;
+
+// Module Configuration
+// const char P1_08ADL_1_CONFIG[] = { 0x40, 0x00 };

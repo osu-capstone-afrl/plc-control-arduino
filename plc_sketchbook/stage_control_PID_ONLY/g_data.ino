@@ -3,7 +3,7 @@
 // ------------------------------------------
 
 // Updates all historical arrays
-void update_path_history(uint32_t current_position)  {
+void update_path_history(float current_position)  {
   
   // Calculate Dt
   unsigned long time_past = time_now;

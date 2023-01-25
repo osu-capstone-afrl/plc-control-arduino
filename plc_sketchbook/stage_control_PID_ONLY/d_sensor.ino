@@ -9,5 +9,7 @@ void set_distance_sensor_power(bool state)
 }
 
 uint32_t read_distance(){
-  return 0; //WRITE CODE HERE
+  uint32_t inputCounts = P1.readAnalog(2, 1); //Slot 2, Channel 1,     0 to 8191, with 2.44μA per count
+  float inputDistance = inputCounts * calibration_mm_per_increment - calibration_mm_to_subtract; //converts to mm. Check Design Document for details.
+  return inputDistance;
 }
