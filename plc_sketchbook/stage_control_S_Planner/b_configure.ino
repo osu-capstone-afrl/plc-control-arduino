@@ -20,18 +20,18 @@ int histSize = 10; //Length of historical Array
 unsigned long time_now = millis();
 
 // Global constants for use in code
-uint32_t desired_offset = 12345;              // FIX THIS /////// 100 microns with 50 micron tolerance, 2 deg sway allowance from perpendicular
-uint32_t command_hist[10]; //Try histSize
-uint32_t distance_hist[10];
-uint32_t velocity_hist[10];
-uint32_t acceleration_hist[10];
+int desired_offset = 12345;              // FIX THIS /////// 100 microns with 50 micron tolerance, 2 deg sway allowance from perpendicular
+int command_hist[10]; //Try histSize
+int distance_hist[10];
+int velocity_hist[10];
+int acceleration_hist[10];
 
 
 // Path Planning Constants
 int max_v = 1;                // m/s
-uint32_t max_a = .05;              // m/s^2
+int max_a = 1;              // m/s^2
 int time_to_max_a = 15;       // s
 int PLC_dt = 5;               // s
 int xf = 0;                  // m
 int x0 = 500;                // m, and this is for a single direction. Deadband is actually twice as wide
-uint32_t timestamps[7];
+int timestamps[7];

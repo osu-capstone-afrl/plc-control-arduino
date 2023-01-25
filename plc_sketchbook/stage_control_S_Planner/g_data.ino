@@ -11,7 +11,7 @@ int last_pointer(int current_pointer) {
 }
 
 
-void update_path_history(uint32_t current_position)  {
+void update_path_history(int current_position)  {
 
   // Error Handling
   int lastPoint = last_pointer(histPointer);
@@ -19,7 +19,7 @@ void update_path_history(uint32_t current_position)  {
   // Calculate Dt
   unsigned long time_past = time_now;
   time_now = millis();
-  uint32_t dt = time_now-time_past;
+  int dt = time_now-time_past;
 
   //Store New Data Points
   distance_hist[histPointer] = current_position;
@@ -46,7 +46,7 @@ void update_path_history(uint32_t current_position)  {
 //  //Calculate dt
 //  unsigned long time_past = time_now;
 //  time_now = millis();
-//  uint32_t dt = time_now-time_past;
+//  int dt = time_now-time_past;
 //
 //  //Add new data
 //  distance_hist[0] = current_position;

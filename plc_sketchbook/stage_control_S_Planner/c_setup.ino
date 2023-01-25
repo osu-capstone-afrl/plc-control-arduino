@@ -33,7 +33,9 @@ void setup() {
   // Calculate S Curve Offsets
 
 // Perform Initial Calculations
-uint32_t j = max_a / time_to_max_a;
+int j = max_a / time_to_max_a;
+int x0 = 100;
+int xf = 0;
 xf = xf - x0;
 
 // Unused Short Profile Calculations
@@ -44,27 +46,24 @@ xf = xf - x0;
 //     profile_max_v = max_v;
 // end
 
-uint32_t profile_max_v = max_v;
-
+int profile_max_v = max_v;
 //////////////////////////////////////////////////////////////
 // Find times at critical points
 //////////////////////////////////////////////////////////////
 
-uint32_t t2 = profile_max_v / max_a;
-uint32_t t3 = t2 + time_to_max_a;
-
+int t2 = profile_max_v / max_a;
+int t3 = t2 + time_to_max_a;
 // Unused Code
 // if short_profile
 //     t4 = t3
 // else
 //     t4 = xf / profile_max_v
 // end
-uint32_t t4 = abs(xf) / profile_max_v;
-
-uint32_t t5 = t4 + time_to_max_a;
-uint32_t t6 = t4 + t2;
-uint32_t t7 = t6 + time_to_max_a;
-uint32_t time_total = t7;
+int t4 = abs(xf) / profile_max_v;
+int t5 = t4 + time_to_max_a;
+int t6 = t4 + t2;
+int t7 = t6 + time_to_max_a;
+int time_total = t7;
 timestamps[1] = time_to_max_a;
 timestamps[2] = t2;
 timestamps[3] = t3;
@@ -73,17 +72,21 @@ timestamps[5] = t5;
 timestamps[6] = t6;
 timestamps[7] = t7;
 
+
 //////////////////////////////////////////////////
 // Calculate Short Profile
 //////////////////////////////////////////////////
-uint32_t dt = PLC_dt; //So we can plot a much more specific curve to see whatprofile actually looks like
-uint32_t t_rec_S[time_total/dt];
-uint32_t x_rec_S[time_total/dt];
-uint32_t v_rec_S[time_total/dt];
-uint32_t a_rec_S[time_total/dt];
+int dt = PLC_dt; //So we can plot a much more specific curve to see whatprofile actually looks like
+int t_rec_S[time_total/dt];
+int x_rec_S[time_total/dt];
+int v_rec_S[time_total/dt];
+int a_rec_S[time_total/dt];
+
+
 x_rec_S[0] = x0;
 int t = 0;
-while (t_rec_S[t] < time_total) {
+
+while (t < time_total) {
     t = t + 1;
     t_rec_S[t] = (t-1)*dt;
     if (t_rec_S[t] < time_to_max_a) {
@@ -121,7 +124,8 @@ while (t_rec_S[t] < time_total) {
 
     a_rec_S[t] = a_rec_S[t]; // *sign(xf)
     v_rec_S[t] = v_rec_S[t]; // *sign(xf)
-    x_rec_S[t] = (x_rec_S[t-1] + v_rec_S[t-1] * dt);    
+    x_rec_S[t] = (x_rec_S[t-1] + v_rec_S[t-1] * dt);
+    Serial.print(x_rec_S[t]); Serial.print(" | "); Serial.print(v_rec_S[t]); Serial.print(" | "); Serial.println(a_rec_S[t]);
 }
 
 }
