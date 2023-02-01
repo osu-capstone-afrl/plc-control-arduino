@@ -10,9 +10,9 @@ void setup() {
 
   // Initializes the P1AM communications to the P1 modules
   // P1.init(); //returns type uint8_t for diagnostic. Implement?
-//  while (!P1.init()) {
-//    delay(100); //Wait for Modules to Sign on  
-//  }
+  while (!P1.init()) {
+    delay(100); //Wait for Modules to Sign on  
+  }
 
   //Initialize Ethernet
 //  Serial.println("Setup Configuration: Network enabled. Will now attempt to connect to network");

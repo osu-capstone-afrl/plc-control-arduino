@@ -10,7 +10,8 @@
 // void setup_ethernet();
 
 // Feedback
-void report_serial();
+void report_serial(String i);
+void report_serial_number(String i, float j);
 void clearSerialBuffer();
 
 // External Indicators
@@ -29,6 +30,6 @@ uint32_t calculate_path();
 
 // CPU I/O
 String status_check(uint8_t Slot);
-void analog_out(uint32_t data, uint8_t slot, uint8_t channel);
-void digital_out(bool data, uint8_t slot, uint8_t channel);
-uint32_t digital_in(uint8_t slot, uint8_t channel);
+void analog_out(int data, int slot, int channel);
+void digital_out(bool data, int slot, int channel);
+uint32_t digital_in(int slot, int channel);
