@@ -3,9 +3,15 @@
 // ---------------------------------------------------
 
 
-void report_serial() {
-  Serial.print("HOUSTON - DO YOU COPY?");
+void report_serial(String i) {
+  Serial.print(i);
 }
+
+void report_serial_number(String i, float j) {
+  Serial.print(i);
+  Serial.println(j);
+}
+
 
 void clearSerialBuffer() {
   while (Serial.available() > 0) {
@@ -18,7 +24,7 @@ void clearSerialBuffer() {
 //Module Status Check Functions
 String status_check(uint8_t Slot) {                                       //Do I need to worry about int vs uint? ASK ADAM
   String message = "";
-  if (Slot == 1) {                                                        // For P1-04DAL-2 module in slot 1
+  if (Slot == 2) {                                                        // For P1-04DAL-2 module in slot 1
     //char P1.readStatus(3, Slot);                                        // Note that I don't think the other module (P1-15CDD1 module in slot 2) has diagnostics
     if (bitRead(P1.readStatus(3, Slot), 0) == 1) {
       message.concat("Module Diagnstics Failure for Slot ");
@@ -47,16 +53,16 @@ String status_check(uint8_t Slot) {                                       //Do I
 ///////////
 
 // OUTPUT FUNCTIONS
-void analog_out(uint32_t data, uint8_t slot, uint8_t channel) {         //Intended for P1-04DAL-2 module in slot 1
+void analog_out(int data, int slot, int channel) {         //Intended for P1-04DAL-2 module in slot 1
   P1.writeAnalog(data, slot, channel);                                      //data output range is 0->4095
 }                                                                           //channels are [1-4]
 
-void digital_out(bool data, uint8_t slot, uint8_t channel) {            //Intended for P1-15CDD1 module in slot 2
+void digital_out(bool data, int slot, int channel) {            //Intended for P1-15CDD1 module in slot 2
   P1.writeDiscrete(data, slot, channel);                                    //data should be HIGH or LOW
 }                                                                           //channels are [1-7] (writing to 8 will have no effect)
 
 // INPUT FUNCTIONS
-uint32_t digital_in(uint8_t slot, uint8_t channel) {                    //Intended for P1-15CDD1 module in slot 2
+uint32_t digital_in(int slot, int channel) {                    //Intended for P1-15CDD1 module in slot 2
   return P1.readDiscrete(slot, channel);                                    //channels are [1-8]
 }                                                                           //specify channel 0 to read all values as hex [ex. 0x7f]
 
