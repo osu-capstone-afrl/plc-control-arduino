@@ -11,8 +11,8 @@ int last_pointer = 0; //Index of historical Array
 const int histSize = 10; //Length of historical Array
 
 
-const float calibration_mm_per_increment = 0.00021364912;  
-const float calibration_mm_to_subtract = 0.35;  // A result of the input scale being from 0-20mA but the input data being from 4-20mA
+const float calibration_mm_per_increment = 0.00020469377; //21364912;  
+const float calibration_mm_to_subtract = 0.27664670658;//0.35;  // A result of the input scale being from 0-20mA but the input data being from 4-20mA
 
 // Calibration Data - Linear Stage
 // Constants go here
@@ -23,11 +23,11 @@ const float calibration_mm_to_subtract = 0.35;  // A result of the input scale b
 //  //Timer for position update over serial
 //  const int period = 500;                   //Time between serial monitor updates [ms]
 unsigned long time_now = millis();
-uint32_t dt = 0;                              //Time between previous cycles
+float dt = 0;                              //Time between previous cycles
 
 // Global constants for use in code
 float desired_offset = 0.7;      //in mm        // MAYBE FIX THIS? /////// 100 microns with 50 micron tolerance, 2 deg sway allowance from perpendicular
-uint32_t command_hist[histSize]; //Try histSize
+float command_hist[histSize]; //Try histSize
 float distance_hist[histSize];
 float velocity_hist[histSize];
 float acceleration_hist[histSize];
@@ -35,7 +35,7 @@ float error[histSize];
 
 // PID Tuning Parameters
 float Int_error = 0;
-float P = 1;
+float P = 0.1;
 float I = 0;
 float D = 0;
 

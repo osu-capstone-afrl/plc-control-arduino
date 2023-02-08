@@ -9,7 +9,15 @@ void report_serial(String i) {
 
 void report_serial_number(String i, float j) {
   Serial.print(i);
-  Serial.println(j);
+  Serial.println(j,8);
+}
+
+void report_serial_inputs(uint32_t i, float j) {
+  Serial.print("Input ---- Counts = ");
+  Serial.print(i);
+  Serial.print(", Distance = ");
+  Serial.print(j, 6);
+  Serial.println(" mm");
 }
 
 

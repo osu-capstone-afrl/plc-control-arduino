@@ -22,11 +22,11 @@ void stage(float requested_position);
 
 // Distance Sensor
 void set_distance_sensor_power(bool state);
-uint32_t read_distance();
+float read_distance();
 
 // Data Maintenance
 void update_path_history(float current_position);
-uint32_t calculate_path();
+float calculate_path();
 
 // CPU I/O
 String status_check(uint8_t Slot);
