@@ -32,11 +32,14 @@ float distance_hist[histSize];
 float velocity_hist[histSize];
 float acceleration_hist[histSize];
 float error[histSize];
+float requested_control = 0;
+bool OutsideRange = true;
+bool Scanning = false;
 
 // PID Tuning Parameters
 float Int_error = 0;
-float P = 0.1;
-float I = 0;
+float P = 5;
+float I = 0; // Be careful, the memory term already adds some form of this
 float D = 0;
 
 // Module Configuration

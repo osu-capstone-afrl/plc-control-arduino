@@ -29,6 +29,11 @@ void setup() {
   // Exteneral Remote Control Indicator
   pinMode(LED_BUILTIN, OUTPUT);
 
+  //ASK WHEN/HOW OFTEN TO CHECK THESE? Probably never for our purposes outside of startup
+  report_serial(status_check(1));
+  report_serial(status_check(2));
+  report_serial(status_check(3));
+
   // Report Setup Success
   Serial.println("Setup Process Complete");
 }

@@ -33,3 +33,5 @@ String status_check(uint8_t Slot);
 void analog_out(int data, int slot, int channel);
 void digital_out(bool data, int slot, int channel);
 uint32_t digital_in(int slot, int channel);
+bool read_Estop();
+bool read_Scan();

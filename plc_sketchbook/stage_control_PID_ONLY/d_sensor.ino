@@ -16,3 +16,14 @@ float read_distance(){
 
   return inputDistance;
 }
+
+
+bool read_Estop(){
+  bool Stop = P1.readDiscrete(3,1);
+  return false;//!Stop;                 ##################################################FIX THIS#########################################################
+}
+
+bool read_Scan(){
+  bool Scan = P1.readDiscrete(3,1);
+  return !Scan;
+}
