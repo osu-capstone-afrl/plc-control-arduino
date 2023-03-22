@@ -7,9 +7,9 @@ float calculate_path()  {
   // Data Pre-Processing //
   // Check for Danger
   if(read_Estop()) { // Fully retract if E-Stop is toggled
-    requested_control = 0;
+    requested_control = MinVal;
   } else {
-  
+
     if (distance_hist[histPointer]>1.398) { // Check if Outside Sensor Range
       OutsideRange = true;
     } else {
@@ -24,10 +24,10 @@ float calculate_path()  {
       }
       
       if (Scanning) {
-        requested_control = command_hist[last_pointer]+0.1; // Scan each possible stage output slowly
+        requested_control = command_hist[last_pointer]+0.5; // Scan each possible stage output slowly
   
-        if (requested_control > 1351) { // If full range has been scanned to no avil
-          requested_control = 0;
+        if (requested_control > MaxVal) {//1351) { // If full range has been scanned to no avil
+          requested_control = MinVal;
           Scanning = false;
         }
         
@@ -52,15 +52,15 @@ float calculate_path()  {
   
       // Calculate Command //NOTE THIS IS NOW IN COUNTS
       requested_control = command_hist[histPointer] + P_Effort + I_Effort + D_Effort;
-      if (requested_control > 1351) {
-        requested_control = 1351; // Cap Max Output @ 3.3V
+      if (requested_control > MaxVal) {//1351) {
+        requested_control = MaxVal; //1351; // Cap Max Output @ 3.3V
       }
     
     }
   
   
-    if (requested_control < 0) {
-      requested_control = 0; // Cap Min Output @ 0V
+    if (requested_control < MinVal) {
+      requested_control = MinVal; // Cap Min Output @ 0V
     }
 
   }
