@@ -2,14 +2,14 @@
 // Calculate Path
 // ---------------
 
-float calculate_path()  {
+int calculate_path()  {
 
   // Data Pre-Processing //
   // Check for Danger
   if(read_Estop()) { // Fully retract if E-Stop is toggled
     requested_control = MinVal;
   } else {
-
+    
     if (distance_hist[histPointer]>1.398) { // Check if Outside Sensor Range
       OutsideRange = true;
     } else {
@@ -24,7 +24,7 @@ float calculate_path()  {
       }
       
       if (Scanning) {
-        requested_control = command_hist[last_pointer]+0.5; // Scan each possible stage output slowly
+        requested_control = command_hist[last_pointer]+10; // Scan each possible stage output slowly
   
         if (requested_control > MaxVal) {//1351) { // If full range has been scanned to no avil
           requested_control = MinVal;

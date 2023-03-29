@@ -26,7 +26,7 @@ float read_distance();
 
 // Data Maintenance
 void update_path_history(float current_position);
-float calculate_path();
+int calculate_path();
 
 // CPU I/O
 String status_check(uint8_t Slot);

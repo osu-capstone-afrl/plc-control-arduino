@@ -12,10 +12,10 @@ void loop()
   update_path_history(current_distance);
   
   // Control Brains
-  float requested_control = calculate_path();  //In future put this directly inside motion control input
+  int requested_control = calculate_path();  //In future put this directly inside motion control input
 
   // Serial Interface
-   report_serial_number("Control Effort - ", requested_control);
+  // report_serial_number("Control Effort - ", requested_control);
 
   // Motion Control
   stage(requested_control);
