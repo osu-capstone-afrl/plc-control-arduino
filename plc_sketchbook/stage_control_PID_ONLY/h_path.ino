@@ -24,7 +24,7 @@ int calculate_path()  {
       }
       
       if (Scanning) {
-        requested_control = command_hist[last_pointer]+10; // Scan each possible stage output slowly
+        requested_control = command_hist[last_pointer]+50; // Scan each possible stage output slowly
   
         if (requested_control > MaxVal) {//1351) { // If full range has been scanned to no avil
           requested_control = MinVal;
