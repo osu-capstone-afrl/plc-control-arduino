@@ -24,7 +24,7 @@ int calculate_path()  {
       }
       
       if (Scanning) {
-        requested_control = command_hist[last_pointer]+10; // Scan each possible stage output slowly
+        requested_control = command_hist[last_pointer]+50; // Scan each possible stage output slowly
   
         if (requested_control > MaxVal) {//1351) { // If full range has been scanned to no avil
           requested_control = MinVal;
@@ -47,11 +47,13 @@ int calculate_path()  {
       Int_error = error[last_pointer] * dt + Int_error;
       
       float P_Effort = P * error[histPointer];
+      //report_serial_number("Proportional Control Effort - ", P_Effort);
       float I_Effort = I * Int_error; // BE SURE TO ADD RE-ZEROING BEFORE USE
       float D_Effort = D * Der_error;
+      //report_serial_number("Derivative Control Effort - ", D_Effort);
   
       // Calculate Command //NOTE THIS IS NOW IN COUNTS
-      requested_control = command_hist[histPointer] + P_Effort + I_Effort + D_Effort;
+      requested_control = command_hist[histPointer] - P_Effort - I_Effort - D_Effort;
       if (requested_control > MaxVal) {//1351) {
         requested_control = MaxVal; //1351; // Cap Max Output @ 3.3V
       }
