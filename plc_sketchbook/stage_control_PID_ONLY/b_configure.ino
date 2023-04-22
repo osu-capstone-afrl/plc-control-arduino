@@ -8,7 +8,7 @@ int AO_Slot = 1; //Analog Out
 int DIO_Slot = 2; //Digital In/Out
 int histPointer = 1; //Index of historical Array
 int last_pointer = 0; //Index of historical Array
-int MaxVal = 8188; //4095 
+int MaxVal = 200000; //4095 = 10Vout 
 int MinVal = 0;  //0
 const int histSize = 10; //Length of historical Array
 
@@ -40,7 +40,7 @@ bool Scanning = false;
 
 // PID Tuning Parameters
 float Int_error = 0;
-float P = 10;
+float P = 50;
 float I = 0; // Be careful, the memory term already adds some form of this
 float D = 0;
 
