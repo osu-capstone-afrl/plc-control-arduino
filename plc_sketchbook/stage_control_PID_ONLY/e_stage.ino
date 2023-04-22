@@ -3,6 +3,7 @@
 // --------------------------------
 void set_stage_power(bool state)  {
   //ADD CODE HERE, this runs at startup
+    analog_out(2048, 1, 1);                       //Output from slot 1 channel 1, note channel 1 may be broken    P104DAL2
 }
 
 void stage(int requested_position)  {                   //in mm, needs to be rescaled to 0->4095*2
